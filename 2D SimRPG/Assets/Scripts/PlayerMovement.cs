@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour {
     Vector3 endPos;
     float time;
 
-    public float walkSpeed = 4f;
+    public float walkSpeed = 400f;
 	// Use this for initialization
 	void Start () {
 	
@@ -29,16 +29,21 @@ public class PlayerMovement : MonoBehaviour {
         {
             StartCoroutine(Move(transform));
         }
+        //stops rotation
         transform.rotation = Quaternion.Euler(0,0,0);
     }
+
     public IEnumerator Move (Transform entity)
     {
-        startPos = entity.position;
-        time = 0;
-        endPos = new Vector3(startPos.x + System.Math.Sign(input.x), startPos.y + System.Math.Sign(input.y), startPos.z);
-        time += Time.deltaTime * walkSpeed;
-        entity.position = Vector3.Lerp(startPos, endPos, time);
-        yield return 0;
+        if ((Input.GetKey("a")) || (Input.GetKey("d")) || (Input.GetKey("w"))|| (Input.GetKey("s")))
+        {
+            startPos = entity.position;
+            time = 0;
+            endPos = new Vector3(startPos.x + System.Math.Sign(input.x), startPos.y + System.Math.Sign(input.y), startPos.z);
+            time += Time.deltaTime * walkSpeed;
+            entity.position = Vector3.Lerp(startPos, endPos, time);
+            yield return 0;
+        }
     }
 }
 
