@@ -3,10 +3,12 @@ using System.Collections;
 using UnityEngine.UI;
 public class MainController : MonoBehaviour {
     public static GameObject currentObject;
+    public static GameObject displayPnl;
     public static Text displayText;
     // Use this for initialization
     void Start () {
         displayText = GameObject.Find("DisplayTxt").GetComponent<Text>();
+        displayPnl = GameObject.Find("DisplayPnl");
         SetDisplayText("Welcome to this game");
     }
 	
@@ -27,6 +29,7 @@ public class MainController : MonoBehaviour {
 
     public static void SetDisplayText(string textString)
     {
+        displayPnl.SetActive(true);
         displayText.text = textString;
     }
 }

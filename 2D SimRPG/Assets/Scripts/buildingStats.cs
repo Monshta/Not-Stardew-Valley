@@ -3,8 +3,12 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class buildingStats : MonoBehaviour {
-    float cost = 0.0f;
-    int inhabitants = 0;
+    int cost = 1;
+    int revenue = 1;
+    int maxWorkers = 2;
+    int curWorkers = 0;
+    int curCleanliness = 10;
+    int maxCleanliness = 10;
     GameObject controller;
     public bool isUpgradeable;
     public bool isBuildable;
@@ -33,7 +37,10 @@ public class buildingStats : MonoBehaviour {
     string GetCurrentStatString()
     {
         if (isUpgradeable)
-            return "This building costs: " + cost.ToString() + " to upgrade and has " + inhabitants.ToString() + " inhabitants";
+            return " This building costs " + cost.ToString() 
+                + " to upgrade \n This building generates " + revenue 
+                +"revenue \n This building is occupied by " +  curWorkers +"/"+ maxWorkers +
+                "\n This building's cleanliness level is " + curCleanliness + "/" + maxCleanliness;
         else if (isBuildable)
             return "This building costs " + cost.ToString() + "  to build.";
         else
@@ -41,8 +48,13 @@ public class buildingStats : MonoBehaviour {
     }
     public void UpgradeBuilding()
     {
-        cost += 1;
-        MainController.SetDisplayText(GetCurrentStatString());
+        if (GameObject.Find("HUD").GetComponent<HUDScript>().moneyDown(cost))
+        {
+            cost += 1;
+            MainController.SetDisplayText(GetCurrentStatString());
+        }
+        else
+            MainController.SetDisplayText("Not Enough funds");
     }
     public void Build()
     {

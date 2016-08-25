@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-public class UpgradeButton : MonoBehaviour {
+public class DisplayPnl : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -19,5 +19,11 @@ public class UpgradeButton : MonoBehaviour {
         else if (selectedBuilding.isBuildable)
             selectedBuilding.Build();
     }
+
+    public void CloseBtn()
+    {
+        gameObject.SetActive(false);
+    }
+
 
 }
