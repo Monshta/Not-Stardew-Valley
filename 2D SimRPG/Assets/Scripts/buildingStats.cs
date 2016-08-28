@@ -9,7 +9,7 @@ public class buildingStats : MonoBehaviour {
     int curWorkers = 0;
     int curCleanliness = 10;
     int maxCleanliness = 10;
-    int moneyStored = 0;
+    int moneyStored = 100;
     GameObject controller;
     public bool isUpgradeable;
     public bool isBuildable;
@@ -74,5 +74,10 @@ public class buildingStats : MonoBehaviour {
         isUpgradeable = true;
         GameObject.Find("UpgradeTxt").GetComponent<Text>().text = "Upgrade";
         SetCurrentStatString();
+    }
+    public void CollectMoneyStored()
+    {
+        GameObject.Find("HUD").GetComponent<HUDScript>().moneyUp(moneyStored);
+        moneyStored = 0;
     }
 }
