@@ -5,19 +5,33 @@ public class Player : MonoBehaviour
 {
 
     public float speed;
+    private Rigidbody2D myRigidbody;
     //private float hitTime;
     //public bool vulnerable = true;
+
+    void Start()
+    {
+        myRigidbody = GetComponent<Rigidbody2D>();
+    }
 
     void Update()
     {
         if (Input.GetAxisRaw("Horizontal") > .5 /*&& vulnerable == true*/ || Input.GetAxisRaw("Horizontal") < -0.5f /*&& vulnerable == true*/)
         {
-            transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime, 0f, 0f));
+            myRigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, myRigidbody.velocity.y);
         }
 
         if (Input.GetAxisRaw("Vertical") > .5 /*&& vulnerable == true*/ || Input.GetAxisRaw("Vertical") < -0.5f /*&& vulnerable == true*/)
         {
-            transform.Translate(new Vector3(0f, Input.GetAxisRaw("Vertical") * speed * Time.deltaTime, 0f));
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, Input.GetAxisRaw("Vertical") * speed);
+        }
+        if (Input.GetAxisRaw("Horizontal") < .5f && Input.GetAxisRaw("Horizontal") > -.5f)
+        {
+            myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
+        }
+        if (Input.GetAxisRaw("Vertical") < .5f && Input.GetAxisRaw("Vertical") > -.5f)
+        {
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0);
         }
     }
     /*IEnumerator HitTimer()
