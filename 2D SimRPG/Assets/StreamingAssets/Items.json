@@ -2,11 +2,34 @@
 	{	
 		"id":0,
 		"title":"Gloves",
-		"value": 8
+		"type": "Armor",
+		"stackable":false,
+		"equipable":true,
+		"stats": {
+			"attack":0,
+			"defense": 2
+		},
+		"consumable":false,
+		"description":"A pair of gloves",
+		"buyValue": 8,
+		"sellValue": 4,
+		"slug": "placeholder_gloves"
 	},
 	{
 		"id":1,
-		"title":"Boots",
-		"value": 7
+		"title":"Wood",
+		"type": "Resource",
+		"stackable":true,
+		"equipable":false,
+		"stats":{
+			"attack":0,
+			"defense": 0
+
+			},
+		"consumable":false,
+		"description":"Some wood",
+		"buyValue": 10,
+		"sellValue": 0,
+		"slug": "placeholder_Character"
 	}
 ]
