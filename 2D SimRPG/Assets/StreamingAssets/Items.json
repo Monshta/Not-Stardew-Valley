@@ -30,6 +30,22 @@
 		"description":"Some wood",
 		"buyValue": 10,
 		"sellValue": 0,
-		"slug": "placeholder_Character"
+		"slug": "Wood"
+	},
+	{
+		"id":2,
+		"title":"Rock",
+		"type":"Resource",
+		"stackable":true,
+		"equipable":false,
+		"stats":{
+			"attack":0,
+			"defense":0
+			},
+		"consumable":false,
+		"description":"Some rocks",
+		"buyValue": 10,
+		"sellValue": 1,
+		"slug": "Rocks"
 	}
 ]

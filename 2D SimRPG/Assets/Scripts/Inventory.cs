@@ -31,6 +31,7 @@ public class Inventory : MonoBehaviour {
         AddItemByTitle("Wood");
         AddItemByTitle("Wood");
         AddItemByTitle("Wood");
+        AddItemByID(2);
         MainController mainController = GameObject.Find("Controller").GetComponent<MainController>();
         InventoryPanel.SetActive(false);
     }
