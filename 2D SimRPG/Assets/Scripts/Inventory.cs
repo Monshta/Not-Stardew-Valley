@@ -7,26 +7,39 @@ public class Inventory : MonoBehaviour {
 
     GameObject InventoryPanel;
     GameObject SlotPanel;
+    GameObject WieldingPanel;
     public GameObject InventorySlot;
     public GameObject InventoryItem;
+    public GameObject Wielded;
     ItemDatabase database;
     int slotAmount;
+    int wieldSlotAmount;
     public List<Item> Items = new List<Item>();
     public List<GameObject> slots = new List<GameObject>();
 
     void Start()
     {
         database = GetComponent<ItemDatabase>();
-        slotAmount = 18;
+        slotAmount = 26;
+        wieldSlotAmount = 8;
         InventoryPanel = GameObject.Find("InventoryPanel");
         SlotPanel = InventoryPanel.transform.FindChild("SlotPanel").gameObject;
-        for(int i = 0; i < 18; i++)
+        WieldingPanel = GameObject.Find("WieldingPanel");
+        for (int i = 0; i < wieldSlotAmount; i++)
+        {
+            Items.Add(new Item());
+            slots.Add(Instantiate(InventorySlot));
+            slots[i].GetComponent<Slot>().id = i;
+            slots[i].transform.SetParent(WieldingPanel.transform);
+        }
+        for (int i = wieldSlotAmount; i < slotAmount; i++)
         {
             Items.Add(new Item());
             slots.Add(Instantiate(InventorySlot));
             slots[i].GetComponent<Slot>().id = i;
             slots[i].transform.SetParent(SlotPanel.transform);
         }
+        //Wielded.transform.SetParent(slots[0].transform);
         AddItemByID(0);
         AddItemByTitle("Wood");
         AddItemByTitle("Wood");
@@ -62,22 +75,7 @@ public class Inventory : MonoBehaviour {
         }
         else
         {
-            for (int i = 0; i < Items.Count; i++)
-            {
-                if (Items[i].ID == -1)
-                {
-                    Items[i] = itemToAdd;
-                    GameObject itemObject = Instantiate(InventoryItem);
-                    itemObject.GetComponent<ItemData>().item = itemToAdd;
-                    itemObject.GetComponent<ItemData>().slotID = i;
-                    itemObject.transform.SetParent(slots[i].transform);
-                    itemObject.transform.position = Vector2.zero;
-                    itemObject.GetComponent<Image>().sprite = itemToAdd.Sprite;
-                    itemObject.name = itemToAdd.Title;
-                    slots[i].name = "Slot" + itemToAdd.Title;
-                    break;
-                }
-            }
+            addToInventorySlot(itemToAdd);
         }
     }
 
@@ -99,21 +97,25 @@ public class Inventory : MonoBehaviour {
         }
         else
         {
-            for (int i = 0; i < Items.Count; i++)
+            addToInventorySlot(itemToAdd);
+        }
+    }
+
+    private void addToInventorySlot(Item itemToAdd)
+    {
+        for (int i = 0; i < Items.Count; i++)
+        {
+            if (Items[i].ID == -1)
             {
-                if (Items[i].ID == -1)
-                {
-                    Items[i] = itemToAdd;
-                    GameObject itemObject = Instantiate(InventoryItem);
-                    itemObject.GetComponent<ItemData>().item = itemToAdd;
-                    itemObject.GetComponent<ItemData>().slotID = i;
-                    itemObject.transform.SetParent(slots[i].transform);
-                    itemObject.transform.position = Vector2.zero;
-                    itemObject.GetComponent<Image>().sprite = itemToAdd.Sprite;
-                    itemObject.name = itemToAdd.Title;
-                    slots[i].name = "Slot" + itemToAdd.Title;
-                    break;
-                }
+                Items[i] = itemToAdd;
+                GameObject itemObject = Instantiate(InventoryItem);
+                itemObject.GetComponent<ItemData>().item = itemToAdd;
+                itemObject.GetComponent<ItemData>().slotID = i;
+                itemObject.transform.SetParent(slots[i].transform);
+                itemObject.transform.position = Vector2.zero;
+                itemObject.GetComponent<Image>().sprite = itemToAdd.Sprite;
+                itemObject.name = itemToAdd.Title;
+                break;
             }
         }
     }

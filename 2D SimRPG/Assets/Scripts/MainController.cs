@@ -39,10 +39,12 @@ public class MainController : MonoBehaviour {
 
     public void ActivateInventoryPanel()
     {
+        Time.timeScale = 0;
         InventoryPanel.SetActive(true);
     }
     public void DeactivateInventoryPanel()
     {
+        Time.timeScale = 1;
         InventoryPanel.SetActive(false);
     }
 }
