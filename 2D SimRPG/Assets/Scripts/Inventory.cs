@@ -24,12 +24,15 @@ public class Inventory : MonoBehaviour {
         {
             Items.Add(new Item());
             slots.Add(Instantiate(InventorySlot));
+            slots[i].GetComponent<Slot>().id = i;
             slots[i].transform.SetParent(SlotPanel.transform);
         }
         AddItemByID(0);
         AddItemByTitle("Wood");
         AddItemByTitle("Wood");
         AddItemByTitle("Wood");
+        MainController mainController = GameObject.Find("Controller").GetComponent<MainController>();
+        InventoryPanel.SetActive(false);
     }
     bool IsItemInInventory(Item item)
     {
@@ -64,6 +67,8 @@ public class Inventory : MonoBehaviour {
                 {
                     Items[i] = itemToAdd;
                     GameObject itemObject = Instantiate(InventoryItem);
+                    itemObject.GetComponent<ItemData>().item = itemToAdd;
+                    itemObject.GetComponent<ItemData>().slotID = i;
                     itemObject.transform.SetParent(slots[i].transform);
                     itemObject.transform.position = Vector2.zero;
                     itemObject.GetComponent<Image>().sprite = itemToAdd.Sprite;
@@ -99,6 +104,8 @@ public class Inventory : MonoBehaviour {
                 {
                     Items[i] = itemToAdd;
                     GameObject itemObject = Instantiate(InventoryItem);
+                    itemObject.GetComponent<ItemData>().item = itemToAdd;
+                    itemObject.GetComponent<ItemData>().slotID = i;
                     itemObject.transform.SetParent(slots[i].transform);
                     itemObject.transform.position = Vector2.zero;
                     itemObject.GetComponent<Image>().sprite = itemToAdd.Sprite;
