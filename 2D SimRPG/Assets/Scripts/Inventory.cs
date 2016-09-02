@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour {
 
-    GameObject InventoryPanel;
+    public GameObject InventoryPanel;
     GameObject SlotPanel;
     GameObject WieldingPanel;
     public GameObject InventorySlot;
@@ -42,7 +42,8 @@ public class Inventory : MonoBehaviour {
         }
         highlightedObj = Instantiate(WieldedHighlight);
         highlightedObj.transform.SetParent(slots[0].transform);
-        AddItemByID(0);
+        highlightedObj.transform.SetAsFirstSibling();
+        AddItemByID(3);
         AddItemByTitle("Wood");
         AddItemByTitle("Wood");
         AddItemByTitle("Wood");

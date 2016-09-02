@@ -15,7 +15,7 @@ public class MainController : MonoBehaviour {
         displayPnl = GameObject.Find("DisplayPnl");
         SetDisplayText("Welcome to this game");
 
-        InventoryPanel = GameObject.Find("InventoryPanel");
+        InventoryPanel = GameObject.Find("ItemDatabase").GetComponent<Inventory>().InventoryPanel;
         inventory = GameObject.Find("ItemDatabase").GetComponent<Inventory>();
         wieldedItem = inventory.getWieldedItem();
 

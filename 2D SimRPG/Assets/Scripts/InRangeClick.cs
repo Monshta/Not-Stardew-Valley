@@ -33,7 +33,7 @@ public class InRangeClick : MonoBehaviour {
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), Vector2.zero);
-            if (hit.collider.gameObject == Parent)
+            if (hit == true && hit.collider.gameObject == Parent)
             {
                 Parent.GetComponent<buildingStats>().CollectMoneyStored();
                 CancelInvoke();

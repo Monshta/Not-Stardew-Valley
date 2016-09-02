@@ -1,19 +1,19 @@
 [
 	{	
 		"id":0,
-		"title":"Gloves",
-		"type": "Armor",
+		"title":" ",
+		"type": " ",
 		"stackable":false,
-		"equipable":true,
+		"equipable":false,
 		"stats": {
 			"attack":0,
-			"defense": 2
+			"defense": 0
 		},
 		"consumable":false,
-		"description":"A pair of gloves",
-		"buyValue": 8,
-		"sellValue": 4,
-		"slug": "placeholder_gloves"
+		"description":" ",
+		"buyValue": 0,
+		"sellValue": 0,
+		"slug": " "
 	},
 	{
 		"id":1,
@@ -47,5 +47,21 @@
 		"buyValue": 10,
 		"sellValue": 1,
 		"slug": "Rocks"
+	},
+	{	
+		"id":3,
+		"title":"Axe",
+		"type": "Tool",
+		"stackable":false,
+		"equipable":false,
+		"stats": {
+			"attack":0,
+			"defense": 0
+		},
+		"consumable":false,
+		"description":"Looks like you can chop stuff with this",
+		"buyValue": 0,
+		"sellValue": 0,
+		"slug": "placeholder_gloves"
 	}
 ]
