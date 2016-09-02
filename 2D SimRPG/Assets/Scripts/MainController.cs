@@ -6,6 +6,9 @@ public class MainController : MonoBehaviour {
     public static GameObject displayPnl;
     public static Text displayText;
     GameObject InventoryPanel;
+    public static Item wieldedItem;
+
+    private Inventory inventory;
     // Use this for initialization
     void Start () {
         displayText = GameObject.Find("DisplayTxt").GetComponent<Text>();
@@ -13,7 +16,9 @@ public class MainController : MonoBehaviour {
         SetDisplayText("Welcome to this game");
 
         InventoryPanel = GameObject.Find("InventoryPanel");
-        
+        inventory = GameObject.Find("ItemDatabase").GetComponent<Inventory>();
+        wieldedItem = inventory.getWieldedItem();
+
     }
 	
 	// Update is called once per frame

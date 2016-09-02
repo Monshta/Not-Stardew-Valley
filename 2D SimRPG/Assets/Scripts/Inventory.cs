@@ -10,7 +10,8 @@ public class Inventory : MonoBehaviour {
     GameObject WieldingPanel;
     public GameObject InventorySlot;
     public GameObject InventoryItem;
-    public GameObject Wielded;
+    public GameObject WieldedHighlight;
+    GameObject highlightedObj;
     ItemDatabase database;
     int slotAmount;
     int wieldSlotAmount;
@@ -39,7 +40,8 @@ public class Inventory : MonoBehaviour {
             slots[i].GetComponent<Slot>().id = i;
             slots[i].transform.SetParent(SlotPanel.transform);
         }
-        //Wielded.transform.SetParent(slots[0].transform);
+        highlightedObj = Instantiate(WieldedHighlight);
+        highlightedObj.transform.SetParent(slots[0].transform);
         AddItemByID(0);
         AddItemByTitle("Wood");
         AddItemByTitle("Wood");
@@ -47,6 +49,40 @@ public class Inventory : MonoBehaviour {
         AddItemByID(2);
         MainController mainController = GameObject.Find("Controller").GetComponent<MainController>();
         InventoryPanel.SetActive(false);
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            changeWielded(0);
+        else if(Input.GetKeyDown(KeyCode.Alpha2))
+            changeWielded(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+            changeWielded(2);
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+            changeWielded(3);
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+            changeWielded(4);
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+            changeWielded(5);
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+            changeWielded(6);
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
+            changeWielded(7);
+        else if (Input.GetKeyDown(KeyCode.RightArrow)){
+            int place = highlightedObj.transform.parent.GetComponent<Slot>().id;
+            if ( place == 7)
+                changeWielded(0);
+            else
+                changeWielded(place + 1);
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            int place = highlightedObj.transform.parent.GetComponent<Slot>().id;
+            if (place == 0)
+                changeWielded(7);
+            else
+                changeWielded(place - 1);
+        }
     }
     bool IsItemInInventory(Item item)
     {
@@ -118,5 +154,19 @@ public class Inventory : MonoBehaviour {
                 break;
             }
         }
+    }
+    private void changeWielded(int place)
+    {
+        highlightedObj.transform.SetParent(slots[place].transform);
+        highlightedObj.transform.localPosition = new Vector2(0, -30);
+        highlightedObj.transform.SetAsFirstSibling();
+        MainController.wieldedItem = getWieldedItem();
+    }
+
+    public Item getWieldedItem()
+    {
+        if (highlightedObj.transform.parent.GetChild(1).gameObject.GetComponent<ItemData>().item.ID != -1)
+            return highlightedObj.transform.parent.GetChild(1).gameObject.GetComponent<ItemData>().item;
+        return null;
     }
 }
