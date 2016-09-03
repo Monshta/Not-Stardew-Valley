@@ -17,6 +17,7 @@ public class TemplateScript : MonoBehaviour {
         if (Input.GetMouseButtonDown(0) && isPlaceable == true)
         {
             Instantiate(finalObject, transform.position, Quaternion.identity);
+            gameObject.SetActive(false);
         }
 	}
 
@@ -33,5 +34,10 @@ public class TemplateScript : MonoBehaviour {
         {
             isPlaceable = true;
         }
+    }
+
+    public void ChooseBuilding ()
+    {
+        gameObject.SetActive (true);
     }
 }
