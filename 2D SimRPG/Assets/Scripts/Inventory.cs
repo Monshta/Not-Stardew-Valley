@@ -42,12 +42,12 @@ public class Inventory : MonoBehaviour {
         }
         highlightedObj = Instantiate(WieldedHighlight);
         highlightedObj.transform.SetParent(slots[0].transform);
-        highlightedObj.transform.SetAsFirstSibling();
+        highlightedObj.transform.SetAsLastSibling();
         AddItemByID(3);
-        AddItemByTitle("Wood");
-        AddItemByTitle("Wood");
-        AddItemByTitle("Wood");
         AddItemByID(2);
+        AddItemByTitle("Wood");
+        AddItemByTitle("Wood");
+        AddItemByTitle("Wood");
         MainController mainController = GameObject.Find("Controller").GetComponent<MainController>();
         InventoryPanel.SetActive(false);
     }
@@ -113,6 +113,7 @@ public class Inventory : MonoBehaviour {
         else
         {
             addToInventorySlot(itemToAdd);
+            highlightedObj.transform.SetAsLastSibling();
         }
     }
 
@@ -135,6 +136,7 @@ public class Inventory : MonoBehaviour {
         else
         {
             addToInventorySlot(itemToAdd);
+            highlightedObj.transform.SetAsLastSibling();
         }
     }
 
@@ -160,14 +162,14 @@ public class Inventory : MonoBehaviour {
     {
         highlightedObj.transform.SetParent(slots[place].transform);
         highlightedObj.transform.localPosition = new Vector2(0, -30);
-        highlightedObj.transform.SetAsFirstSibling();
+        highlightedObj.transform.SetAsLastSibling();
         MainController.wieldedItem = getWieldedItem();
     }
 
     public Item getWieldedItem()
     {
-        if (highlightedObj.transform.parent.GetChild(1).gameObject.GetComponent<ItemData>().item.ID != -1)
-            return highlightedObj.transform.parent.GetChild(1).gameObject.GetComponent<ItemData>().item;
+        if (highlightedObj.transform.parent.GetChild(0).gameObject.GetComponent<ItemData>().item.ID != -1)
+            return highlightedObj.transform.parent.GetChild(0).gameObject.GetComponent<ItemData>().item;
         return null;
     }
 }
