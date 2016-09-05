@@ -17,10 +17,12 @@ public class Persistence : MonoBehaviour {
     public void SaveAll()
     {
         saveInventory();
+        GameObject.Find("HUD").GetComponent<HUDScript>().Save();
     }
     public void LoadAll()
     {
         loadInventory();
+        GameObject.Find("HUD").GetComponent<HUDScript>().Load();
     }
     private void saveInventory()
     {

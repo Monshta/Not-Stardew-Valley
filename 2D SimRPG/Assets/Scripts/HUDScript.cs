@@ -2,6 +2,8 @@
 using System.Collections;
 using System;
 using UnityEngine.UI;
+using System.IO;
+using LitJson;
 
 public class HUDScript : MonoBehaviour {
     public int maxHP = 10;
@@ -103,5 +105,32 @@ public class HUDScript : MonoBehaviour {
         money += up;
         updateHUD();
     }
-   
+   public void Save()
+    {
+        HudData hudData = new HudData();
+        hudData.maxHP = maxHP;
+        hudData.maxEnergy = maxEnergy;
+        hudData.curHP = curHP;
+        hudData.curEnergy = curEnergy;
+        hudData.money = money;
+        File.WriteAllText(Application.persistentDataPath+"/hudData.json", JsonMapper.ToJson(hudData).ToString());
+    }
+    public void Load()
+    {
+        JsonData jsonData = JsonMapper.ToObject(File.ReadAllText(Application.persistentDataPath + "/hudData.json"));
+        this.maxHP = (int)jsonData["maxHP"];
+        this.maxEnergy = (int)jsonData["maxEnergy"];
+        this.curHP = (int)jsonData["curHP"];
+        this.curEnergy = (int)jsonData["curEnergy"];
+        this.money = (int)jsonData["money"];
+        updateHUD();
+    }
+}
+
+class HudData{
+    public int maxHP;
+    public int maxEnergy;
+    public int curHP;
+    public int curEnergy;
+    public int money;
 }
