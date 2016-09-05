@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 using System;
-
+using LitJson;
+using System.IO;
 public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler {
 
     public Item item;
@@ -44,6 +45,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         this.transform.SetParent(inv.slots[slotID].transform);
         this.transform.position = inv.slots[slotID].transform.position;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
+        inv.highlightedObj.transform.SetAsLastSibling();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -55,4 +57,5 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         tooltip.Deactivate();
     }
+
 }

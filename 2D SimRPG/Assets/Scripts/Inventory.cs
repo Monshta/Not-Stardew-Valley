@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
-
+using LitJson;
+using System.IO;
 public class Inventory : MonoBehaviour {
 
     public GameObject InventoryPanel;
@@ -11,12 +12,15 @@ public class Inventory : MonoBehaviour {
     public GameObject InventorySlot;
     public GameObject InventoryItem;
     public GameObject WieldedHighlight;
-    GameObject highlightedObj;
+    public GameObject highlightedObj;
     ItemDatabase database;
     int slotAmount;
     int wieldSlotAmount;
     public List<Item> Items = new List<Item>();
     public List<GameObject> slots = new List<GameObject>();
+
+  
+
 
     void Start()
     {
@@ -45,9 +49,6 @@ public class Inventory : MonoBehaviour {
         highlightedObj.transform.SetAsLastSibling();
         AddItemByID(3);
         AddItemByID(2);
-        AddItemByTitle("Wood");
-        AddItemByTitle("Wood");
-        AddItemByTitle("Wood");
         MainController mainController = GameObject.Find("Controller").GetComponent<MainController>();
         InventoryPanel.SetActive(false);
     }
@@ -172,4 +173,27 @@ public class Inventory : MonoBehaviour {
             return highlightedObj.transform.parent.GetChild(0).gameObject.GetComponent<ItemData>().item;
         return null;
     }
+    public void Save()
+    {
+        List<string> strList = new List<string>();
+        foreach (GameObject s in slots)
+        {
+            if(s.transform.childCount > 0 && s.transform.GetChild(0) != highlightedObj)
+            {
+                ItemData itemdata = s.transform.GetChild(0).GetComponent<ItemData>();
+                SerializeItems serrializeItems = new SerializeItems();
+                serrializeItems.ID = itemdata.item.ID;
+                serrializeItems.amount = itemdata.amount;
+                strList.Add(JsonMapper.ToJson(serrializeItems).ToString());
+            }
+        }
+        string finalString = string.Join(",", strList.ToArray());
+        File.WriteAllText(Application.persistentDataPath + "/itemData.json", "[" +finalString + "]");
+    }
+
+}
+class SerializeItems
+{
+        public int ID;
+        public int amount;
 }
