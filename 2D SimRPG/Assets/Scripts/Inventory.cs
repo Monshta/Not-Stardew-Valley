@@ -152,7 +152,7 @@ public class Inventory : MonoBehaviour {
                 itemObject.GetComponent<ItemData>().item = itemToAdd;
                 itemObject.GetComponent<ItemData>().slotID = i;
                 itemObject.transform.SetParent(slots[i].transform);
-                itemObject.transform.position = Vector2.zero;
+                itemObject.transform.localPosition = Vector2.zero;
                 itemObject.GetComponent<Image>().sprite = itemToAdd.Sprite;
                 itemObject.name = itemToAdd.Title;
                 break;

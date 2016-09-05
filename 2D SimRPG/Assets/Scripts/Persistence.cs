@@ -35,7 +35,6 @@ public class Persistence : MonoBehaviour {
         Inventory inv = GameObject.Find("ItemDatabase").GetComponent<Inventory>();
         string file = File.ReadAllText(Application.persistentDataPath + "/itemData.json");
         JsonData loadItem = JsonMapper.ToObject(file);
-        Debug.Log(loadItem[2]["amount"]);
         for (int i = 0; i < loadItem.Count; i++)
             for (int j = 0; j < (int)loadItem[i]["amount"]; j++)
                 inv.AddItemByID((int)loadItem[i]["ID"]);
