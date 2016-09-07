@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour {
     private Item item;
-    private string data;
     private GameObject tooltip;
 
     void Start()
@@ -19,10 +18,9 @@ public class Tooltip : MonoBehaviour {
             tooltip.transform.position = Input.mousePosition;
         }
     }
-    public void Activate(Item item)
+    public void Activate(string data)
     {
-        this.item = item;
-        ConstructDataString();
+        tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
         tooltip.SetActive(true);
     }
 
@@ -31,13 +29,4 @@ public class Tooltip : MonoBehaviour {
         tooltip.SetActive(false);
     }
 
-    public void ConstructDataString()
-    {
-        data = "<b>" +item.Title + "</b>\n<color=#0473f0>" + item.Type + "</color>\n\n" + item.Description;
-        if (item.Equipable)
-        {
-            data += "\n\nAttack: " + item.Attack + " Defense: " + item.Defense; 
-        }
-        tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
-    }
 }

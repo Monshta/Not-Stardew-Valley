@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System;
 
-public class buildingStats : MonoBehaviour {
+public class buildingStats : MonoBehaviour
+{
     int cost = 1;
     int revenue = 1;
     int maxWorkers = 2;
@@ -11,6 +14,7 @@ public class buildingStats : MonoBehaviour {
     int maxCleanliness = 10;
     int moneyStored = 100;
     GameObject controller;
+    Tooltip tooltip;
     public bool isUpgradeable;
     public bool isBuildable;
 
@@ -19,6 +23,7 @@ public class buildingStats : MonoBehaviour {
     // Use this for initialization
     void Start () {
         GameObject controller = GameObject.Find("Controller");
+        tooltip = GameObject.Find("ItemDatabase").GetComponent<Tooltip>();
         BldCost = GameObject.Find("BldCost").GetComponent<Text>();
         BldMoneyStored = GameObject.Find("BldMoneyStored").GetComponent<Text>();
         BldOccupancy = GameObject.Find("BldOccupancy").GetComponent<Text>();
@@ -30,6 +35,15 @@ public class buildingStats : MonoBehaviour {
 	void Update () {
 
 	}
+    public void OnMouseOver()
+    {
+        tooltip.Activate(ConstructDataString());
+    }
+
+    public void OnMouseExit()
+    {
+        tooltip.Deactivate();
+    }
     //needs collider to work
     void OnMouseDown()
     {
@@ -79,5 +93,11 @@ public class buildingStats : MonoBehaviour {
     {
         GameObject.Find("HUD").GetComponent<HUDScript>().moneyUp(moneyStored);
         moneyStored = 0;
+    }
+
+    public string ConstructDataString()
+    {
+        string data = "<b>" + gameObject.name + "</b>\n<color=#0473f0>Money Stored:" + moneyStored + "</color>\n\n";
+        return data;
     }
 }

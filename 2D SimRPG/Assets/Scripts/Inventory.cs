@@ -178,7 +178,7 @@ public class Inventory : MonoBehaviour {
         List<string> strList = new List<string>();
         foreach (GameObject s in slots)
         {
-            if(s.transform.childCount > 0 && s.transform.GetChild(0) != highlightedObj)
+            if(s.transform.childCount > 0 && s.transform.GetChild(0).name != highlightedObj.name)
             {
                 ItemData itemdata = s.transform.GetChild(0).GetComponent<ItemData>();
                 SerializeItems serrializeItems = new SerializeItems();

@@ -2,8 +2,6 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 using System;
-using LitJson;
-using System.IO;
 public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler {
 
     public Item item;
@@ -50,7 +48,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tooltip.Activate(item);
+        tooltip.Activate(ConstructDataString());
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -58,4 +56,13 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         tooltip.Deactivate();
     }
 
+    public string ConstructDataString()
+    {
+        string data = "<b>" + item.Title + "</b>\n<color=#0473f0>" + item.Type + "</color>\n\n" + item.Description;
+        if (item.Equipable)
+        {
+            data += "\n\nAttack: " + item.Attack + " Defense: " + item.Defense;
+        }
+        return data;
+    }
 }
