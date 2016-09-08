@@ -6,25 +6,37 @@ public class Player : MonoBehaviour
 
     public float speed;
     private Rigidbody2D myRigidbody;
+    private Animator anim;
+    private bool playerMoving;
+    private Vector2 lastMove;
+
     //private float hitTime;
     //public bool vulnerable = true;
 
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
+        playerMoving = false;
+
         if (Input.GetAxisRaw("Horizontal") > .5 /*&& vulnerable == true*/ || Input.GetAxisRaw("Horizontal") < -0.5f /*&& vulnerable == true*/)
         {
             myRigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, myRigidbody.velocity.y);
+            playerMoving = true;
+            lastMove = new Vector2(Input.GetAxisRaw("Horizontal"), 0f);
         }
 
         if (Input.GetAxisRaw("Vertical") > .5 /*&& vulnerable == true*/ || Input.GetAxisRaw("Vertical") < -0.5f /*&& vulnerable == true*/)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, Input.GetAxisRaw("Vertical") * speed);
+            playerMoving = true;
+            lastMove = new Vector2(0f, Input.GetAxisRaw("Vertical"));
         }
+
         if (Input.GetAxisRaw("Horizontal") < .5f && Input.GetAxisRaw("Horizontal") > -.5f)
         {
             myRigidbody.velocity = new Vector2(0, myRigidbody.velocity.y);
@@ -33,6 +45,12 @@ public class Player : MonoBehaviour
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 0);
         }
+
+        anim.SetFloat("MoveX", Input.GetAxisRaw("Horizontal"));
+        anim.SetFloat("MoveY", Input.GetAxisRaw("Vertical"));
+        anim.SetBool("PlayerMoving", playerMoving);
+        anim.SetFloat("LastMoveX", lastMove.x);
+        anim.SetFloat("LastMoveY", lastMove.y);
     }
     /*IEnumerator HitTimer()
     {
