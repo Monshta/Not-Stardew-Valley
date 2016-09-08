@@ -19,7 +19,8 @@ public class InRangeClick : MonoBehaviour {
     {
         if (collider.name == "Character")
         {
-            InvokeRepeating("IfRightClick", 0, 0.01f);
+            InvokeRepeating("IfLeftClick", 0, 0.01f);
+            InvokeRepeating("IfRightClick", 0, 0.02f);
         }
     }
 
@@ -28,16 +29,28 @@ public class InRangeClick : MonoBehaviour {
         CancelInvoke();
     }
 
-    void IfRightClick()
+    void IfLeftClick()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), Vector2.zero);
             if (hit == true && hit.collider.gameObject == Parent)
             {
                 Parent.GetComponent<buildingStats>().CollectMoneyStored();
-                CancelInvoke();
+                CancelInvoke("IfLeftClick");
             }
         }
     }
+    void IfRightClick()
+    {
+        if (Input.GetMouseButtonDown(1) && MainController.wieldedItem.Title == "Axe")
+        {
+            RaycastHit2D hit = Physics2D.Raycast(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), Vector2.zero);
+            if (hit == true && hit.collider.gameObject == Parent)
+            {
+                Parent.GetComponent<buildingStats>().Repair();
+            }
+        }
+    }
+
 } 

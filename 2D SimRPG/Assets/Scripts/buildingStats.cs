@@ -10,10 +10,11 @@ public class buildingStats : MonoBehaviour
     int revenue = 1;
     int maxWorkers = 2;
     int curWorkers = 0;
-    int curCleanliness = 10;
+    int curCleanliness = 0;
     int maxCleanliness = 10;
     int moneyStored = 100;
     GameObject controller;
+    GameObject upgrateBtn;
     Tooltip tooltip;
     public bool isUpgradeable;
     public bool isBuildable;
@@ -23,12 +24,11 @@ public class buildingStats : MonoBehaviour
     // Use this for initialization
     void Start () {
         GameObject controller = GameObject.Find("Controller");
+        upgrateBtn = GameObject.Find("UpgradeBtn");
+        upgrateBtn.SetActive(false);
         tooltip = GameObject.Find("ItemDatabase").GetComponent<Tooltip>();
         BldCost = GameObject.Find("BldCost").GetComponent<Text>();
-        BldMoneyStored = GameObject.Find("BldMoneyStored").GetComponent<Text>();
-        BldOccupancy = GameObject.Find("BldOccupancy").GetComponent<Text>();
         BldRenevue = GameObject.Find("BldRevenue").GetComponent<Text>(); ;
-        BldCleanliness = GameObject.Find("BldCleanliness").GetComponent<Text>();
     }
 	
 	// Update is called once per frame
@@ -37,7 +37,8 @@ public class buildingStats : MonoBehaviour
 	}
     public void OnMouseOver()
     {
-        tooltip.Activate(ConstructDataString());
+        if(Time.timeScale > 0.0f)
+            tooltip.Activate(ConstructDataString());
     }
 
     public void OnMouseExit()
@@ -60,12 +61,8 @@ public class buildingStats : MonoBehaviour
     {
         if (isUpgradeable)
         {
-            MainController.SetDisplayText("A very nice " + gameObject.name);
-            BldCost.text = "Cost: " + cost;
-            BldMoneyStored.text = "Stored: " + moneyStored;
-            BldOccupancy.text = "Occupancy " + curWorkers + "/" + maxWorkers;
-            BldRenevue.text = "Revenue: " + revenue;
-            BldCleanliness.text = "Cleanliness: " + curCleanliness + "/" + maxCleanliness;
+            MainController.SetDisplayText("A very nice " + gameObject.name + "\n Costs " + cost +" to upgrade");
+            upgrateBtn.SetActive(true);
         }
         else if (isBuildable)
             MainController.SetDisplayText("Looks like something was built here before");
@@ -94,10 +91,15 @@ public class buildingStats : MonoBehaviour
         GameObject.Find("HUD").GetComponent<HUDScript>().moneyUp(moneyStored);
         moneyStored = 0;
     }
-
+    public void Repair()
+    {
+        if(curCleanliness < maxCleanliness)
+            curCleanliness += 1;
+    }
     public string ConstructDataString()
     {
-        string data = "<b>" + gameObject.name + "</b>\n<color=#0473f0>Money Stored:" + moneyStored + "</color>\n\n";
+        string data = "<b>" + gameObject.name + "</b>\n<color=#0473f0>Money Stored:" + moneyStored + "</color>\n\nWorkers: "
+            +curWorkers + "/" + maxWorkers+ "\nMaintentence: " + curCleanliness + "/" + maxCleanliness + "\nRevenue: " + revenue;
         return data;
     }
 }
