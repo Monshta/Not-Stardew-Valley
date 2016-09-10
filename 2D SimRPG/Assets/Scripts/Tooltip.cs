@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour {
+    public Sprite test;
+
     private Item item;
     private GameObject tooltip;
 
@@ -21,6 +23,7 @@ public class Tooltip : MonoBehaviour {
     public void Activate(string data)
     {
         tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
+        tooltip.GetComponent<Image>().sprite = test;
         tooltip.SetActive(true);
     }
 
