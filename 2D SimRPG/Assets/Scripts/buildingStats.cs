@@ -89,4 +89,9 @@ public class buildingStats : MonoBehaviour
             +curWorkers + "/" + maxWorkers+ "\nMaintentence: " + curCleanliness + "/" + maxCleanliness + "\nRevenue: " + revenue;
         return data;
     }
+    public void NewDay()
+    {
+        moneyStored += revenue;
+        curCleanliness -= 3;
+    }
 }

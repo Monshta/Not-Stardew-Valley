@@ -13,8 +13,8 @@ public class HUDScript : MonoBehaviour {
     public int money = 100;
 
     string formattedTime;
-
-    TimeSpan timeSpan = TimeSpan.FromHours(11);
+    TimeSpan timeSpan = TimeSpan.FromDays(1);
+    TimeSpan startHour = TimeSpan.FromHours(7);
     TimeSpan minutes = TimeSpan.FromMinutes(10);
     Text timeTxt;
     Text healthTxt;
@@ -29,6 +29,7 @@ public class HUDScript : MonoBehaviour {
         updateHUD();
 
         //Set up game time
+        timeSpan = timeSpan.Add(startHour);
         formattedTime = string.Format("{0:D2} {1:D2}:{2:D2} AM", timeSpan.Days, timeSpan.Hours, timeSpan.Minutes);
         timeTxt.text = "Day: " + formattedTime;
         InvokeRepeating("addMin", 7.5F, 7.5F);
@@ -56,6 +57,15 @@ public class HUDScript : MonoBehaviour {
             formattedTime = string.Format("{0:D2} {1:D2}:{2:D2} AM", timeSpan.Days, timeSpan.Hours, timeSpan.Minutes);
         }
         timeTxt.text = "Day: " + formattedTime;
+    }
+    public void NewDay()
+    {
+        Time.timeScale = 0;
+        timeSpan = TimeSpan.FromDays(timeSpan.Days + 1);
+        timeSpan = timeSpan.Add(startHour);
+        formattedTime = string.Format("{0:D2} {1:D2}:{2:D2} AM", timeSpan.Days, timeSpan.Hours, timeSpan.Minutes);
+        timeTxt.text = "Day: " + formattedTime;
+        Time.timeScale = 1;
     }
     public void updateHUD()
     {
