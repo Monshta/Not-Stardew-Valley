@@ -6,11 +6,10 @@ public class Tooltip : MonoBehaviour {
     public Sprite test;
 
     private Item item;
-    private GameObject tooltip;
+    public GameObject tooltip;
 
     void Start()
     {
-        tooltip = GameObject.Find("Tooltip");
         tooltip.SetActive(false);
     }
     void Update()

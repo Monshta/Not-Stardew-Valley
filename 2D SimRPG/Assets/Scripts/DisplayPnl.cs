@@ -16,8 +16,6 @@ public class DisplayPnl : MonoBehaviour {
         buildingStats selectedBuilding = MainController.getSelectedObject().GetComponent<buildingStats>();
         if (selectedBuilding.isUpgradeable)
             selectedBuilding.UpgradeBuilding();
-        else if (selectedBuilding.isBuildable)
-            selectedBuilding.Build();
     }
 
     public void CloseBtn()

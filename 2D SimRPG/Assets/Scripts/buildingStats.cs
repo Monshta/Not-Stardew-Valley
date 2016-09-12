@@ -14,21 +14,16 @@ public class buildingStats : MonoBehaviour
     int maxCleanliness = 10;
     int moneyStored = 100;
     GameObject controller;
-    GameObject upgrateBtn;
-    Tooltip tooltip;
+    public Tooltip tooltip;
     public bool isUpgradeable;
-    public bool isBuildable;
 
-    Text BldCost, BldMoneyStored, BldOccupancy, BldRenevue, BldCleanliness;
+    public GameObject upgrateBtn;
+
 
     // Use this for initialization
     void Start () {
         GameObject controller = GameObject.Find("Controller");
-        upgrateBtn = GameObject.Find("UpgradeBtn");
         upgrateBtn.SetActive(false);
-        tooltip = GameObject.Find("ItemDatabase").GetComponent<Tooltip>();
-        BldCost = GameObject.Find("BldCost").GetComponent<Text>();
-        BldRenevue = GameObject.Find("BldRevenue").GetComponent<Text>(); ;
     }
 	
 	// Update is called once per frame
@@ -37,12 +32,14 @@ public class buildingStats : MonoBehaviour
 	}
     public void OnMouseOver()
     {
-        if(Time.timeScale > 0.0f)
+        tooltip = GameObject.Find("ItemDatabase").GetComponent<Tooltip>();
+        if (Time.timeScale > 0.0f)
             tooltip.Activate(ConstructDataString());
     }
 
     public void OnMouseExit()
     {
+        tooltip = GameObject.Find("ItemDatabase").GetComponent<Tooltip>();
         tooltip.Deactivate();
     }
     //needs collider to work
@@ -50,10 +47,10 @@ public class buildingStats : MonoBehaviour
     {
         MainController.setSelectedObject(gameObject);
         SetCurrentStatString();
+        upgrateBtn.SetActive(true);
         if (isUpgradeable)
             GameObject.Find("UpgradeTxt").GetComponent<Text>().text = "Upgrade";
-        if(isBuildable)
-            GameObject.Find("UpgradeTxt").GetComponent<Text>().text = "Build";
+
     }
 
 
@@ -62,10 +59,7 @@ public class buildingStats : MonoBehaviour
         if (isUpgradeable)
         {
             MainController.SetDisplayText("A very nice " + gameObject.name + "\n Costs " + cost +" to upgrade");
-            upgrateBtn.SetActive(true);
         }
-        else if (isBuildable)
-            MainController.SetDisplayText("Looks like something was built here before");
         else
             MainController.SetDisplayText(" ");
     }
@@ -78,13 +72,6 @@ public class buildingStats : MonoBehaviour
         }
         else
             MainController.SetDisplayText("Not Enough funds");
-    }
-    public void Build()
-    {
-        isBuildable = false;
-        isUpgradeable = true;
-        GameObject.Find("UpgradeTxt").GetComponent<Text>().text = "Upgrade";
-        SetCurrentStatString();
     }
     public void CollectMoneyStored()
     {
