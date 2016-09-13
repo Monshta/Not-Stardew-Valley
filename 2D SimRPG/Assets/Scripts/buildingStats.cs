@@ -6,13 +6,13 @@ using System;
 
 public class buildingStats : MonoBehaviour
 {
-    int cost = 1;
-    int revenue = 1;
-    int maxWorkers = 2;
-    int curWorkers = 0;
-    int curCleanliness = 0;
-    int maxCleanliness = 10;
-    int moneyStored = 100;
+    public int cost = 1;
+    public int revenue = 1;
+    public int maxWorkers = 2;
+    public int curWorkers = 0;
+    public int curCleanliness = 0;
+    public int maxCleanliness = 10;
+    public int moneyStored = 100;
     GameObject controller;
     public Tooltip tooltip;
     public bool isUpgradeable;
@@ -28,8 +28,7 @@ public class buildingStats : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-
-	}
+    }
     public void OnMouseOver()
     {
         tooltip = GameObject.Find("ItemDatabase").GetComponent<Tooltip>();
@@ -49,7 +48,7 @@ public class buildingStats : MonoBehaviour
         SetCurrentStatString();
         upgrateBtn.SetActive(true);
         if (isUpgradeable)
-            GameObject.Find("UpgradeTxt").GetComponent<Text>().text = "Upgrade";
+            upgrateBtn.transform.GetChild(0).GetComponent<Text>().text = "Upgrade";
 
     }
 
@@ -95,3 +94,4 @@ public class buildingStats : MonoBehaviour
         curCleanliness -= 3;
     }
 }
+
