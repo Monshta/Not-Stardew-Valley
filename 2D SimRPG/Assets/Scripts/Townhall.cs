@@ -55,6 +55,8 @@ public class Townhall : MonoBehaviour {
                 GameObject.Find("HUD").GetComponent<HUDScript>().moneyDown(buildCost);
                 townHallRubble.SetActive(false);
                 townHall.SetActive(true);
+                townHallLevel = 1;
+                CancelInvoke();
             }
         }
     }
