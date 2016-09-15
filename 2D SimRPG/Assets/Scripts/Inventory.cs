@@ -47,8 +47,12 @@ public class Inventory : MonoBehaviour {
         highlightedObj = Instantiate(WieldedHighlight);
         highlightedObj.transform.SetParent(slots[0].transform);
         highlightedObj.transform.SetAsLastSibling();
-        AddItemByID(3);
         AddItemByID(2);
+        AddItemByID(2);
+        AddItemByID(1);
+        AddItemByID(1);
+        AddItemByID(3);
+        AddItemByID(1);
         MainController mainController = GameObject.Find("Controller").GetComponent<MainController>();
         InventoryPanel.SetActive(false);
     }
@@ -158,6 +162,67 @@ public class Inventory : MonoBehaviour {
                 break;
             }
         }
+    }
+
+    public bool deleteItemByID(int id)
+    {
+        int delSlotId = -1;
+        ItemData delItem = null;
+        InventoryPanel.SetActive(true);
+        for(int i = 0; i < slotAmount; i++)
+        {
+            if (slots[i].transform.childCount > 0 && slots[i].transform.GetChild(0).GetComponent<ItemData>().item.ID == id) {
+                delItem = slots[i].transform.GetChild(0).GetComponent<ItemData>();
+                delSlotId = slots[i].GetComponent<Slot>().id;
+            }
+        }
+
+        bool ifDel = delete(delItem, delSlotId,1);
+        InventoryPanel.SetActive(false);
+        return ifDel;
+    }
+    public bool deleteItemByID(int id, int reduceAmount)
+    {
+        int delSlotId = -1;
+        ItemData delItem = null;
+        InventoryPanel.SetActive(true);
+        for (int i = 0; i < slotAmount; i++)
+        {
+            if (slots[i].transform.childCount > 0 && slots[i].transform.GetChild(0).name != "WieldedHighlight(Clone)" && 
+                slots[i].transform.GetChild(0).GetComponent<ItemData>().item.ID == id)
+            {
+                delItem = slots[i].transform.GetChild(0).GetComponent<ItemData>();
+                delSlotId = slots[i].GetComponent<Slot>().id;
+            }
+        }
+
+        bool ifDel = delete(delItem, delSlotId,reduceAmount);
+        InventoryPanel.SetActive(false);
+        return ifDel;
+    }
+    private bool delete(ItemData delItem, int delSlotId, int reduceAmount)
+    {
+        if (delItem != null && delItem.item.Stackable && delItem.name != "WieldedHighlight(Clone)")
+        {
+            if (delItem.amount < reduceAmount)
+                return false;
+            delItem.amount -= reduceAmount;
+            delItem.transform.GetChild(0).GetComponent<Text>().text = delItem.amount.ToString();
+            if (delItem.amount == 0)
+            {
+                Destroy(slots[delSlotId].transform.GetChild(0).gameObject);
+                Items[delSlotId] = new Item();
+            }
+            return true;
+        }
+        else if (delItem != null && delItem.name != "WieldedHighlight(Clone)")
+        {
+            Destroy(slots[delSlotId].transform.GetChild(0).gameObject);
+            Items[delSlotId] = new Item();
+            return true;
+        }
+        else
+            return false;
     }
     private void changeWielded(int place)
     {

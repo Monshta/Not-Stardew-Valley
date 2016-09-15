@@ -7,6 +7,7 @@ public class Townhall : MonoBehaviour {
     GameObject townHall;
     public int townHallLevel;
     public int buildCost = 1;
+    public int woodCost = 3;
     Tooltip tooltip;
 	// Use this for initialization
 	void Start () {
@@ -50,7 +51,8 @@ public class Townhall : MonoBehaviour {
         {
             int money = GameObject.Find("HUD").GetComponent<HUDScript>().money;
             RaycastHit2D hit = Physics2D.Raycast(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y), Vector2.zero);
-            if (hit == true && hit.collider.gameObject == townHallConatiner && money > buildCost)
+            if (hit == true && hit.collider.gameObject == townHallConatiner && money > buildCost &&
+                GameObject.Find("ItemDatabase").GetComponent<Inventory>().deleteItemByID(1,woodCost))
             {
                 GameObject.Find("HUD").GetComponent<HUDScript>().moneyDown(buildCost);
                 townHallRubble.SetActive(false);
